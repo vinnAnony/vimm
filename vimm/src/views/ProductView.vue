@@ -41,8 +41,9 @@ export default {
             quantity:1,
         }
     },
-    mounted() {
-        this.getProduct()
+    async mounted() {
+        await this.getProduct()
+        document.title = `Vimm | ${this.product.name}`
     },
     methods: {
         async getProduct(){

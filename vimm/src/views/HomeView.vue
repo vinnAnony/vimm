@@ -46,6 +46,7 @@ export default {
   },
   mounted() {
     this.getLatestProducts()
+    document.title = `Vimm | Home`
   },
   methods: {
     getLatestProducts(){
