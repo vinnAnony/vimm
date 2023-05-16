@@ -1,6 +1,7 @@
 from io import BytesIO
 from PIL import Image
 
+from django.conf import settings
 from django.core.files import File
 from django.db import models
 
@@ -10,6 +11,8 @@ class Category(models.Model):
     slug = models.SlugField()
 
     class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
         ordering = ('name',)
 
     def __str__(self):
@@ -42,18 +45,18 @@ class Product(models.Model):
 
     def get_image(self):
         if self.image:
-            return ''+self.image.url
+            return settings.APP_URL+self.image.url
         return ''
 
     def get_thumbnail(self):
         if self.thumbnail:
-            return ''+self.thumbnail
+            return settings.APP_URL+self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
                 self.save()
 
-                return ''+self.thumbnail.url
+                return settings.APP_URL+self.thumbnail.url
             else:
                 return ''
 

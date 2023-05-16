@@ -137,3 +137,9 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if DEBUG:
+    APP_URL = 'http://localhost:8000'
+else:
+    APP_URL = f'https://{ALLOWED_HOSTS[0]}'
