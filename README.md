@@ -2,4 +2,3 @@
 
 djoser - auth & tokens
 pillow - resizing images
-stripe - payments
