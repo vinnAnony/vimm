@@ -38,7 +38,12 @@
 
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/login" class="button is-light">Log In</router-link>
+              <template v-if="$store.state.isAuthenticated">
+                <router-link to="/my-account" class="button is-light">My Account</router-link>
+              </template>
+              <template v-else>
+                <router-link to="/login" class="button is-light">Log In</router-link>
+              </template>
               <router-link to="/cart" class="button is-success">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                 <span>Cart ({{ cartTotalLength }})</span></router-link>
@@ -75,17 +80,6 @@ export default {
       }
     }
   },
-  computed: {
-    cartTotalLength() {
-      let totalLength = 0
-
-      this.cart.items.forEach(item => {
-        totalLength += item.quantity
-      });
-
-      return totalLength;
-    }
-  },
   beforeCreate() {
     this.$store.commit('initializeStore');
 
@@ -98,6 +92,17 @@ export default {
   },
   mounted() {
     this.cart = this.$store.state.cart
+  },
+  computed: {
+    cartTotalLength() {
+      let totalLength = 0
+
+      this.cart.items.forEach(item => {
+        totalLength += item.quantity
+      });
+
+      return totalLength;
+    }
   },
 };
 </script>
