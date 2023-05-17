@@ -55,6 +55,12 @@ export default {
     },
     mounted() {
         this.cart = this.$store.state.cart;
+        document.title = `Vimm | Cart`
+    },
+    methods: {
+        removeFromCart(item) {
+            this.cart.items = this.cart.items.filter(i => i.product.id !== item.product.id)
+        }
     },
     computed: {
         cartTotalLength() {
