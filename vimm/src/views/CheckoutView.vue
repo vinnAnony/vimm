@@ -114,8 +114,6 @@ export default {
             cart: {
                 items: []
             },
-            stripe: {},
-            card: {},
             first_name: '',
             last_name: '',
             email: '',
@@ -155,6 +153,64 @@ export default {
             if (this.place === '') {
                 this.errors.push('The place field is required')
             }
+
+            if (!this.errors.length) {
+                this.$store.commit("setIsLoading", true);
+
+                // TODO: Trigger STK Push and get mpesa_code from backend
+                this.mpesaPaymentHandler('MP3SAC0D3')
+            }
+        },
+        async mpesaPaymentHandler(mpesa_code) {
+            const items = []
+
+            for (let i = 0; i < this.cart.items.length; i++) {
+                const item = this.cart.items[i];
+                const obj = {
+                    product: item.product.id,
+                    quantity: item.quantity,
+                    price: item.product.price * item.quantity,
+                }
+
+                items.push(obj)
+
+            }
+            const formData = {
+                'first_name': this.first_name,
+                'last_name': this.last_name,
+                'email': this.email,
+                'phone': this.phone,
+                'address': this.address,
+                'place': this.place,
+                'items': items,
+                'mpesa_code': mpesa_code,
+            }
+
+            await axios.post('/api/v1/checkout/', formData)
+                .then(response => {
+                    this.$store.commit("clearCart")
+                    this.$router.push('/cart/success')
+                })
+                .catch(error => {
+                    if (error.response.status === 500) {
+                        this.errors.push('Something went wrong. Please try again')
+                    } else {
+                        if (error.response) {
+                            for (const property in error.response.data) {
+                                this.errors.push(`${property}: ${error.response.data[property]}`)
+                            }
+
+                            console.log(JSON.stringify(error.response.data))
+                        } else if (error.message) {
+                            this.errors.push('Something went wrong. Please try again')
+
+                            console.log(JSON.stringify(error))
+                        }
+                    }
+
+                })
+
+            this.$store.commit("setIsLoading", false);
         }
     },
     computed: {
