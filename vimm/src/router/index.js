@@ -11,6 +11,7 @@ import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 import MyAccountView from "../views/MyAccountView.vue";
 import CheckoutView from "../views/CheckoutView.vue";
+import SuccessView from "../views/SuccessView.vue";
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
     meta: {
       requiresLogin: true,
     },
+  },
+  {
+    path: "/success",
+    name: "success",
+    component: SuccessView,
   },
   {
     path: "/search",
