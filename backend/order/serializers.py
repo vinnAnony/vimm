@@ -15,6 +15,35 @@ class OrderItemSerializer(serializers.ModelSerializer):
         )
 
 
+class MyOrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = (
+            "price",
+            "product",
+            "quantity",
+        )
+
+
+class MyOrderSerializer(serializers.ModelSerializer):
+    items = MyOrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "address",
+            "place",
+            "phone",
+            "mpesa_code",
+            "items",
+            "paid_amount",
+        )
+
+
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
