@@ -5,17 +5,9 @@ from .models import Order, OrderItem
 from product.serializers import ProductSerializer
 
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrderItem
-        fields = (
-            "price",
-            "product",
-            "quantity",
-        )
-
-
 class MyOrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
     class Meta:
         model = OrderItem
         fields = (
@@ -41,6 +33,18 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "mpesa_code",
             "items",
             "paid_amount",
+        )
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = OrderItem
+        fields = (
+            "price",
+            "product",
+            "quantity",
         )
 
 
