@@ -104,6 +104,11 @@ export default {
       return totalLength;
     }
   },
+  watch: {
+    $route(to, from) {
+      this.showMobileMenu = false;
+    }
+  },
 };
 </script>
 
