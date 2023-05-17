@@ -4,6 +4,7 @@ import ProductView from "../views/ProductView.vue";
 import CategoryView from "../views/CategoryView.vue";
 import SearchView from "../views/SearchView.vue";
 import CartView from "../views/CartView.vue";
+import SignUpView from "../views/SignUpView.vue";
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignUpView,
   },
   {
     path: "/search",
